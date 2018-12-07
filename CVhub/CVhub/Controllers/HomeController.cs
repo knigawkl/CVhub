@@ -13,7 +13,7 @@ namespace CVhub.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "About this project";
 
             return View();
         }

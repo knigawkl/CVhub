@@ -11,6 +11,13 @@ namespace CVhub.Controllers
     [Route("[controller]/[action]")]
     public class JobOfferController : Controller
     {
+        private static List<Company> companies = new List<Company>
+        {
+            new Company() { Id = 0, Name = "Lekseek"},
+            new Company() { Id = 1, Name = "KMD Poland"},
+            new Company() { Id = 1, Name = "IBM"}
+        };
+
         private static List<JobOffer> jobOffers = new List<JobOffer>
         {
             new JobOffer{
@@ -34,14 +41,7 @@ namespace CVhub.Controllers
                 SalaryFrom = 5000,
                 SalaryTo = 8000,
                 ValidUntil = DateTime.Now.AddDays(18)
-            },
-        };
-
-        private static List<Company> companies = new List<Company>
-        {
-            new Company{ Id = 0, Name = "Lekseek"},
-            new Company{ Id = 1, Name = "KMD Poland"},
-            new Company{ Id = 1, Name = "IBM"}
+            }
         };
 
         public ActionResult Edit(int? id)
@@ -50,7 +50,7 @@ namespace CVhub.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var offer = jobOffers.Find(j => j.Id == id);
+            var offer = jobOffers.Find(x => x.Id == id);
             if (offer == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
