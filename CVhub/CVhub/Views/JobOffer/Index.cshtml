@@ -7,7 +7,7 @@
         @using (Html.BeginForm("Index", "JobOffer", FormMethod.Get))
         {
             <div class="input-group col-md-12" style="margin-bottom: 14px">
-                <input type="text" class="form-control" placeholder="Search by offer title.."
+                <input type="text" class="form-control" placeholder="Search by offer title..."
                        name="search" id="search" />
                 <span class="input-group-btn">
                     <button class="btn btn-info" type="submit">
@@ -26,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var offer in Model.OrderBy(x => x.Created))
+                @foreach (var offer in Model.OrderBy(o => o.Created))
                 {
                     <tr>
                         <td>@Html.ActionLink(offer.JobTitle, "Details", new { id = offer.Id })</td>

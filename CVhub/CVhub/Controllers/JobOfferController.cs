@@ -126,7 +126,7 @@ namespace CVhub.Controllers
                 return View(jobOffers);
             }
             List<JobOffer> searchResult = jobOffers.FindAll(x => x.JobTitle.Contains(searchString));
-            return View(jobOffers);
+            return View(searchResult);
         }
 
         public IActionResult Details(int id)
