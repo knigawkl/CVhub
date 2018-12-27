@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using System.Net;
 using CVhub.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 
 namespace CVhub.Controllers
 {
@@ -19,46 +20,14 @@ namespace CVhub.Controllers
             _context = context;
         }
 
-        private static List<Company> companies = new List<Company>
-        {
-            new Company() { Id = 0, Name = "Lekseek"},
-            new Company() { Id = 1, Name = "KMD Poland"},
-            new Company() { Id = 1, Name = "IBM"}
-        };
-
-        private static List<JobOffer> jobOffers = new List<JobOffer>
-        {
-            new JobOffer{
-                Id = 0,
-                JobTitle = "Django Developer",
-                Company = companies.FirstOrDefault(x => x.Name.Equals("Lekseek")),
-                Created = DateTime.Now,
-                Description = "Vestibulum sit amet nisi nec erat laoreet viverra. Vivamus sed metus risus. Suspendisse lacinia amet.",
-                Location = "Poland, Warsaw",
-                SalaryFrom = 4000,
-                SalaryTo = 7000,
-                ValidUntil = DateTime.Now.AddDays(123)
-            },
-            new JobOffer{
-                Id = 2,
-                JobTitle = "Vue.js Developer",
-                Company = companies.FirstOrDefault(x => x.Name.Equals("KMD Poland")),
-                Created = DateTime.Now,
-                Description = "Integer vitae rutrum leo, vel vulputate orci. Nullam eget imperdiet sapien. Sed euismod lorem nullam.",
-                Location = "Poland, Warsaw",
-                SalaryFrom = 5000,
-                SalaryTo = 8000,
-                ValidUntil = DateTime.Now.AddDays(18)
-            }
-        };
-
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var offer = jobOffers.Find(x => x.Id == id);
+
+            var offer = _context.JobOffers.FirstOrDefault(x => x.Id == id);
             if (offer == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
@@ -74,7 +43,7 @@ namespace CVhub.Controllers
             {
                 return View();
             }
-            var offer = jobOffers.Find(x => x.Id == model.Id);
+            var offer = _context.JobOffers.FirstOrDefault(x => x.Id == model.Id);
             offer.JobTitle = model.JobTitle;
             return RedirectToAction("Details", new { id = model.Id });
         }
@@ -86,7 +55,8 @@ namespace CVhub.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            jobOffers.RemoveAll(x => x.Id == id);
+            var offer = _context.JobOffers.FirstOrDefault(x => x.Id == id);
+            _context.JobOffers.Remove(offer);
             return RedirectToAction("Index");
         }
 
@@ -94,8 +64,8 @@ namespace CVhub.Controllers
         {
             var model = new JobOfferCreateView
             {
-                Companies = companies
-            };
+                Companies = _context.Companies.ToList()
+        };
             return View(model);
         }
 
@@ -103,17 +73,20 @@ namespace CVhub.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(JobOfferCreateView model)
         {
+            var companies = await _context.Companies.ToListAsync();
+            var jobOffers = await _context.JobOffers.ToListAsync();
+
             if (!ModelState.IsValid)
             {
                 model.Companies = companies;
                 return View(model);
             }
             var id = jobOffers.Max(x => x.Id) + 1;
-            jobOffers.Add(new JobOffer
-            {
+
+            var company = new JobOffer {
                 Id = id,
                 //CompanyId = model.CompanyId,
-                //Company = companies.FirstOrDefault(c => c.Id == model.CompanyId),
+                Company = companies.FirstOrDefault(c => c.Id == model.CompanyId),
                 Description = model.Description,
                 JobTitle = model.JobTitle,
                 Location = model.Location,
@@ -121,14 +94,18 @@ namespace CVhub.Controllers
                 SalaryTo = model.SalaryTo,
                 ValidUntil = model.ValidUntil,
                 Created = DateTime.Now
-            }
-            );
+            };
+            await _context.JobOffers.AddAsync(company);
+            await _context.SaveChangesAsync();
+
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Index([FromQuery(Name = "search")] string searchString)
+        public async Task<ActionResult> Index([FromQuery(Name = "search")] string searchString)
         {
+            var jobOffers = await _context.JobOffers.ToListAsync();
+
             if (String.IsNullOrEmpty(searchString))
             {
                 return View(jobOffers);
@@ -139,7 +116,7 @@ namespace CVhub.Controllers
 
         public IActionResult Details(int id)
         {
-            var offer = jobOffers.FirstOrDefault(x => x.Id == id);
+            var offer = _context.JobOffers.ToList().FirstOrDefault(x => x.Id == id);
             return View(offer);
         }
     }

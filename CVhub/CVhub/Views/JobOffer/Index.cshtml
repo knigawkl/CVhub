@@ -30,7 +30,8 @@
                 {
                     <tr>
                         <td>@Html.ActionLink(offer.JobTitle, "Details", new { id = offer.Id })</td>
-                        <td>@offer.Company.Name</td>
+                        <td>@offer.CompanyId</td>
+                        
                         <td>@offer.Location</td>
                         <td>@offer.Created</td>
                     </tr>

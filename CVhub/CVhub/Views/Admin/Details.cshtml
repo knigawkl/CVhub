@@ -13,8 +13,9 @@
     <tbody>
         <tr>
             <td>@Model.Id</td>
-            <td>@Model.Name</td> 
+            <td>@Model.Name</td>
             <td>@Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })</td>
         </tr>
     </tbody>
 </table>
+@Html.ActionLink("Go back to Companies", "Index", "Admin", null, new { @class = "btn btn-primary" })
