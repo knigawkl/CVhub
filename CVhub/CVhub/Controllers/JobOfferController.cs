@@ -104,8 +104,8 @@ namespace CVhub.Controllers
             jobOffers.Add(new JobOffer
             {
                 Id = id,
-                CompanyId = model.CompanyId,
-                Company = companies.FirstOrDefault(c => c.Id == model.CompanyId),
+                //CompanyId = model.CompanyId,
+                //Company = companies.FirstOrDefault(c => c.Id == model.CompanyId),
                 Description = model.Description,
                 JobTitle = model.JobTitle,
                 Location = model.Location,
