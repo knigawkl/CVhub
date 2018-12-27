@@ -5,12 +5,20 @@ using System.Linq;
 using System;
 using System.Threading.Tasks;
 using System.Net;
+using CVhub.EntityFramework;
 
 namespace CVhub.Controllers
 {
     [Route("[controller]/[action]")]
     public class JobOfferController : Controller
     {
+        private readonly DataContext _context;
+
+        public JobOfferController(DataContext context)
+        {
+            _context = context;
+        }
+
         private static List<Company> companies = new List<Company>
         {
             new Company() { Id = 0, Name = "Lekseek"},
