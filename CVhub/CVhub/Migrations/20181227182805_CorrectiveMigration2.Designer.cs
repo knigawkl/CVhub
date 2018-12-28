@@ -4,14 +4,16 @@ using CVhub.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CVhub.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20181227182805_CorrectiveMigration2")]
+    partial class CorrectiveMigration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,11 +42,7 @@ namespace CVhub.Migrations
 
                     b.Property<bool>("ContactAgreement");
 
-                    b.Property<string>("CoverLetter");
-
                     b.Property<string>("CvUrl");
-
-                    b.Property<DateTime>("DateOfBirth");
 
                     b.Property<string>("EmailAddress")
                         .IsRequired();
@@ -77,7 +75,7 @@ namespace CVhub.Migrations
 
                     b.Property<int>("CompanyId");
 
-                    b.Property<string>("CompanyName");
+                    b.Property<int>("CompanyName");
 
                     b.Property<DateTime>("Created");
 

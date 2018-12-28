@@ -1,6 +1,6 @@
 ﻿@model JobOffer
 
-@{ ViewBag.Title = "Offer";}
+@{ ViewBag.Title = "Offer Details";}
 
 <div class="row page-box">
     <h1>@Model.JobTitle</h1>
@@ -13,7 +13,7 @@
         <div class="offer-details">
             <div>
                 <label>Company:</label>
-                <span>@Model.Company.Name</span>
+                <span>@Model.CompanyName</span>
             </div>
             <div>
                 <label>Location:</label>
@@ -23,14 +23,14 @@
             {
                 <div>
                     <label>Salary from:</label>
-                    <span>@Model.SalaryFrom  (PLN)</span>
+                    <span>@Model.SalaryFrom (PLN)</span>
                 </div>
             }
             @if (Model.SalaryTo.HasValue)
             {
                 <div>
                     <label>Salary to:</label>
-                    <span>@Model.SalaryTo</span>
+                    <span>@Model.SalaryTo (PLN)</span>
                 </div>
             }
             <div>
@@ -45,7 +45,7 @@
                 </div>
             }
                 <div>
-                    @Html.ActionLink("Apply", "Apply", new { id = Model.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Apply", "Create", "JobApplication", new { id = Model.Id }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
                     @using (Html.BeginForm("Delete", "JobOffer", new { Model.Id }, FormMethod.Post, null, new { style = "display:inline;" }))
                     {

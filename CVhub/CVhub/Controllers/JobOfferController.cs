@@ -26,7 +26,6 @@ namespace CVhub.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
             var offer = _context.JobOffers.FirstOrDefault(x => x.Id == id);
             if (offer == null)
             {
@@ -44,7 +43,13 @@ namespace CVhub.Controllers
                 return View();
             }
             var offer = _context.JobOffers.FirstOrDefault(x => x.Id == model.Id);
+            if (offer == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
             offer.JobTitle = model.JobTitle;
+            offer.Description = model.Description;
+            _context.SaveChanges();
             return RedirectToAction("Details", new { id = model.Id });
         }
 
@@ -57,6 +62,7 @@ namespace CVhub.Controllers
             }
             var offer = _context.JobOffers.FirstOrDefault(x => x.Id == id);
             _context.JobOffers.Remove(offer);
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -65,7 +71,7 @@ namespace CVhub.Controllers
             var model = new JobOfferCreateView
             {
                 Companies = _context.Companies.ToList()
-        };
+            };
             return View(model);
         }
 
@@ -81,12 +87,10 @@ namespace CVhub.Controllers
                 model.Companies = companies;
                 return View(model);
             }
-            var id = jobOffers.Max(x => x.Id) + 1;
+            //var id = jobOffers.Max(x => x.Id) + 1;
 
-            var company = new JobOffer {
-                Id = id,
-                //CompanyId = model.CompanyId,
-                Company = companies.FirstOrDefault(c => c.Id == model.CompanyId),
+            var offer = new JobOffer {
+                CompanyId = model.CompanyId,
                 Description = model.Description,
                 JobTitle = model.JobTitle,
                 Location = model.Location,
@@ -95,7 +99,7 @@ namespace CVhub.Controllers
                 ValidUntil = model.ValidUntil,
                 Created = DateTime.Now
             };
-            await _context.JobOffers.AddAsync(company);
+            await _context.JobOffers.AddAsync(offer);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");

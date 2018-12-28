@@ -12,6 +12,7 @@ namespace CVhub.Models
         public string JobTitle { get; set; }
         public virtual Company Company { get; set; }
         public virtual int CompanyId { get; set; }
+        public virtual string CompanyName { get; set; }
 
         [Display(Name = "Salary from")]
         public decimal? SalaryFrom { get; set; }

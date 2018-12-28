@@ -31,14 +31,13 @@ namespace CVhub.Controllers
             return View(company);
         }
 
-        /*
-        public async Task<ActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var company = await this._context.Companies.FirstOrDefaultAsync(x => x.Id == id);
+            var company = _context.Companies.FirstOrDefault(x => x.Id == id);
             if (company == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
@@ -54,19 +53,15 @@ namespace CVhub.Controllers
             {
                 return View();
             }
-            var company = await this._context.Companies.FirstOrDefaultAsync(x => x.Id == model.Id);
+            var company = _context.Companies.FirstOrDefault(x => x.Id == model.Id);
+            if (company == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            company.Id = model.Id;
             company.Name = model.Name;
-
-            var newCompany = new Company {
-                Id = company.Id,
-                Name = company.Name
-            };
-            await _context.Companies.AddAsync(newCompany);
-            await _context.SaveChangesAsync();
-
-
+            _context.SaveChanges();
             return RedirectToAction("Details", new { id = model.Id });
         }
-        */
     }
 }

@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<JobOffer>
 
+@{ ViewBag.Title = "Job Offers";}
+
 <div class="row page-box">
     <div class="col-sm-12">
         <h2>Job Offer list</h2>
@@ -30,8 +32,8 @@
                 {
                     <tr>
                         <td>@Html.ActionLink(offer.JobTitle, "Details", new { id = offer.Id })</td>
-                        <td>@offer.CompanyId</td>
-                        
+                        <td>@offer.CompanyName</td>
+
                         <td>@offer.Location</td>
                         <td>@offer.Created</td>
                     </tr>

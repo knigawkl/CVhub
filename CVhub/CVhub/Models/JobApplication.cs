@@ -12,18 +12,28 @@ namespace CVhub.Models
         public int OfferId { get; set; }
 
         [Required(ErrorMessage = "First Name required")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Last Name required")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Phone number required")]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Email required")]
         [Display(Name = "Email Address")]
+        [EmailAddress(ErrorMessage = "Invalid email address!")]
         public string EmailAddress { get; set; }
         public bool ContactAgreement { get; set; }
         public string CvUrl { get; set; }
+        public string CoverLetter { get; set; }
+
+        [Required(ErrorMessage = "Date of birth required")]
+        [Display(Name = "Date of birth")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime DateOfBirth { get; set; }
     }
 }
