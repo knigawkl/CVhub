@@ -18,12 +18,12 @@ namespace CVhub.Controllers
             _context = context;
         }
 
-        public async Task<ActionResult> Create(int jobOfferId)
+        public async Task<ActionResult> Create(int id)
         {
             JobApplicationCreateView model = new JobApplicationCreateView();
-            var jobOffer = _context.JobOffers.FirstOrDefault(x => x.Id == 1);
+            var jobOffer = _context.JobOffers.FirstOrDefault(x => x.Id == id);
             model.JobTitle = jobOffer.JobTitle;
-            model.JobOfferId = jobOfferId;
+            model.OfferId = id;
             return View(model);
         }
 
@@ -33,7 +33,7 @@ namespace CVhub.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(model);
             }
 
             var application = new JobApplication
@@ -43,13 +43,14 @@ namespace CVhub.Controllers
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,
                 EmailAddress = model.EmailAddress,
-                CoverLetter = model.CoverLetter
+                CoverLetter = model.CoverLetter,
+                DateOfBirth = model.DateOfBirth
             };
 
             await _context.JobApplications.AddAsync(application);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Details", "JobOffer", new { id = model.JobOfferId });
+            return RedirectToAction("Index", "JobOffer");
         }
     }
 }

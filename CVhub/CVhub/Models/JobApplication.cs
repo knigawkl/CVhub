@@ -27,13 +27,14 @@ namespace CVhub.Models
         [Display(Name = "Email Address")]
         [EmailAddress(ErrorMessage = "Invalid email address!")]
         public string EmailAddress { get; set; }
-        public bool ContactAgreement { get; set; }
-        public string CvUrl { get; set; }
+        //public bool ContactAgreement { get; set; }
+        //public string CvUrl { get; set; }
         public string CoverLetter { get; set; }
 
+        [DataType(DataType.Date)]
         [Required(ErrorMessage = "Date of birth required")]
         [Display(Name = "Date of birth")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
-        public DateTime DateOfBirth { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyy-MM-dd}")]
+        public DateTime? DateOfBirth { get; set; }
     }
 }

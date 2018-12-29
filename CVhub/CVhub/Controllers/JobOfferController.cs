@@ -87,10 +87,9 @@ namespace CVhub.Controllers
                 model.Companies = companies;
                 return View(model);
             }
-            //var id = jobOffers.Max(x => x.Id) + 1;
 
             var offer = new JobOffer {
-                CompanyId = model.CompanyId,
+                CompanyName = model.CompanyName,
                 Description = model.Description,
                 JobTitle = model.JobTitle,
                 Location = model.Location,
@@ -108,7 +107,7 @@ namespace CVhub.Controllers
         [HttpGet]
         public async Task<ActionResult> Index([FromQuery(Name = "search")] string searchString)
         {
-            var jobOffers = await _context.JobOffers.ToListAsync();
+            List<JobOffer> jobOffers = await _context.JobOffers.ToListAsync();
 
             if (String.IsNullOrEmpty(searchString))
             {

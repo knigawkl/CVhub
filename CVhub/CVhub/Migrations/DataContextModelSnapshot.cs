@@ -38,11 +38,7 @@ namespace CVhub.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("ContactAgreement");
-
                     b.Property<string>("CoverLetter");
-
-                    b.Property<string>("CvUrl");
 
                     b.Property<DateTime>("DateOfBirth");
 
@@ -75,7 +71,7 @@ namespace CVhub.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CompanyId");
+                    b.Property<int?>("CompanyId");
 
                     b.Property<string>("CompanyName");
 
@@ -89,9 +85,11 @@ namespace CVhub.Migrations
 
                     b.Property<string>("Location");
 
-                    b.Property<decimal?>("SalaryFrom");
+                    b.Property<decimal?>("SalaryFrom")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal?>("SalaryTo");
+                    b.Property<decimal?>("SalaryTo")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("ValidUntil");
 
@@ -113,8 +111,7 @@ namespace CVhub.Migrations
                 {
                     b.HasOne("CVhub.Models.Company", "Company")
                         .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CompanyId");
                 });
 #pragma warning restore 612, 618
         }

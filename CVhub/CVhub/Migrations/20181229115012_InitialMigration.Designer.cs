@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CVhub.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181226004655_InitialMigration")]
+    [Migration("20181229115012_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,21 +40,25 @@ namespace CVhub.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("ContactAgreement");
+                    b.Property<string>("CoverLetter");
 
-                    b.Property<string>("CvUrl");
+                    b.Property<DateTime>("DateOfBirth");
 
-                    b.Property<string>("EmailAddress");
+                    b.Property<string>("EmailAddress")
+                        .IsRequired();
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
                     b.Property<int?>("JobOfferId");
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired();
 
                     b.Property<int>("OfferId");
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -69,7 +73,9 @@ namespace CVhub.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CompanyId");
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<string>("CompanyName");
 
                     b.Property<DateTime>("Created");
 
@@ -81,9 +87,11 @@ namespace CVhub.Migrations
 
                     b.Property<string>("Location");
 
-                    b.Property<decimal?>("SalaryFrom");
+                    b.Property<decimal?>("SalaryFrom")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal?>("SalaryTo");
+                    b.Property<decimal?>("SalaryTo")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("ValidUntil");
 
@@ -91,7 +99,7 @@ namespace CVhub.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("JobOfers");
+                    b.ToTable("JobOffers");
                 });
 
             modelBuilder.Entity("CVhub.Models.JobApplication", b =>
@@ -105,8 +113,7 @@ namespace CVhub.Migrations
                 {
                     b.HasOne("CVhub.Models.Company", "Company")
                         .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CompanyId");
                 });
 #pragma warning restore 612, 618
         }

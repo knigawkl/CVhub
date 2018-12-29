@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CVhub.Models
 {
@@ -11,12 +12,13 @@ namespace CVhub.Models
         [Required]
         public string JobTitle { get; set; }
         public virtual Company Company { get; set; }
-        public virtual int CompanyId { get; set; }
         public virtual string CompanyName { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         [Display(Name = "Salary from")]
         public decimal? SalaryFrom { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         [Display(Name = "Salary to")]
         public decimal? SalaryTo { get; set; }
         public DateTime Created { get; set; }

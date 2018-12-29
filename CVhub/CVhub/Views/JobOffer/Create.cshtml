@@ -15,10 +15,10 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Company)
-                @Html.DropDownListFor(m => m.CompanyId,
-                    Model.Companies.Select(c => new SelectListItem {Text =c.Name, Value = c.Id.ToString() }),
+                @Html.DropDownListFor(m => m.CompanyName,
+                    Model.Companies.Select(c => new SelectListItem {Text =c.Name, Value = c.Name }),
                     new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.CompanyId, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Location)
