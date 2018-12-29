@@ -7,8 +7,10 @@
         <h2>Apply for: @Model.JobTitle</h2>
         @using (Html.BeginForm("Create"))
         {
-            Html.HiddenFor(model => Model.OfferId);
             @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.EditorFor(m => m.OfferId, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.FirstName)
                 @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })

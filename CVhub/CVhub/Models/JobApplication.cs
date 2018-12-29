@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace CVhub.Models
     public class JobApplication
     {
         public int Id { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
         public int OfferId { get; set; }
 
         [Required(ErrorMessage = "First Name required")]
