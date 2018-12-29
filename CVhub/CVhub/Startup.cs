@@ -30,7 +30,7 @@ namespace CVhub
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var connection = @"Server=.\SQLEXPRESS;Database=Test0;Trusted_Connection=True;";
+            var connection = @"Server=.\SQLEXPRESS;Database=CVhub;Trusted_Connection=True;";
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
         }
 

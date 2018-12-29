@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CVhub.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181229115012_InitialMigration")]
+    [Migration("20181229192940_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,7 +42,8 @@ namespace CVhub.Migrations
 
                     b.Property<string>("CoverLetter");
 
-                    b.Property<DateTime>("DateOfBirth");
+                    b.Property<DateTime?>("DateOfBirth")
+                        .IsRequired();
 
                     b.Property<string>("EmailAddress")
                         .IsRequired();

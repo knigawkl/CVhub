@@ -40,7 +40,8 @@ namespace CVhub.Migrations
 
                     b.Property<string>("CoverLetter");
 
-                    b.Property<DateTime>("DateOfBirth");
+                    b.Property<DateTime?>("DateOfBirth")
+                        .IsRequired();
 
                     b.Property<string>("EmailAddress")
                         .IsRequired();

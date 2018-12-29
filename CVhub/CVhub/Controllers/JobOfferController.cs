@@ -120,6 +120,8 @@ namespace CVhub.Controllers
         public IActionResult Details(int id)
         {
             var offer = _context.JobOffers.ToList().FirstOrDefault(x => x.Id == id);
+            List<JobApplication> applications = _context.JobApplications.Where(x => x.OfferId == id).ToList();
+            offer.JobApplications = applications;
             return View(offer);
         }
     }
