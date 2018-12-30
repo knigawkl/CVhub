@@ -12,7 +12,7 @@ namespace CVhub.Models
         public int Id { get; set; }
 
         [HiddenInput(DisplayValue = false)]
-        public int OfferId { get; set; }
+        public int JobOfferId { get; set; }
 
         [Required(ErrorMessage = "First Name required")]
         [Display(Name = "First Name")]

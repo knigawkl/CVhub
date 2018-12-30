@@ -19,6 +19,8 @@ namespace CVhub.Models
         [Required(ErrorMessage = "Company name required")]
         public virtual string CompanyName { get; set; }
 
+        public virtual int? CompanyId { get; set; }
+
         [Range(1, int.MaxValue, ErrorMessage = "Input correct min salary")]
         [Required(ErrorMessage = "Min salary required")]
         [Column(TypeName = "decimal(18,2)")]

@@ -16,8 +16,8 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Description)
-                @Html.TextAreaFor(m => m.Description, new { @class = "form-control"})
-                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter description" })
+                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger"})
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         }

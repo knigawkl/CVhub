@@ -89,6 +89,7 @@ namespace CVhub.Controllers
             }
 
             var offer = new JobOffer {
+                CompanyId = companies.First(x => x.Name == model.CompanyName).Id,
                 CompanyName = model.CompanyName,
                 Description = model.Description,
                 JobTitle = model.JobTitle,
@@ -120,7 +121,7 @@ namespace CVhub.Controllers
         public IActionResult Details(int id)
         {
             var offer = _context.JobOffers.ToList().FirstOrDefault(x => x.Id == id);
-            List<JobApplication> applications = _context.JobApplications.Where(x => x.OfferId == id).ToList();
+            List<JobApplication> applications = _context.JobApplications.Where(x => x.JobOfferId == id).ToList();
             offer.JobApplications = applications;
             return View(offer);
         }

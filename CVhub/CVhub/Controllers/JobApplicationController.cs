@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using CVhub.EntityFramework;
 using CVhub.Models;
@@ -23,7 +20,7 @@ namespace CVhub.Controllers
             JobApplicationCreateView model = new JobApplicationCreateView();
             var jobOffer = _context.JobOffers.FirstOrDefault(x => x.Id == id);
             model.JobTitle = jobOffer.JobTitle;
-            model.OfferId = id;
+            model.JobOfferId = id;
             return View(model);
         }
 
@@ -38,7 +35,7 @@ namespace CVhub.Controllers
 
             var application = new JobApplication
             {
-                OfferId = model.OfferId,
+                JobOfferId = model.JobOfferId,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,

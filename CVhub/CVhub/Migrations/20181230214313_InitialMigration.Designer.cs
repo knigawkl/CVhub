@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CVhub.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181229192940_InitialMigration")]
+    [Migration("20181230214313_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,12 +51,10 @@ namespace CVhub.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired();
 
-                    b.Property<int?>("JobOfferId");
+                    b.Property<int>("JobOfferId");
 
                     b.Property<string>("LastName")
                         .IsRequired();
-
-                    b.Property<int>("OfferId");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired();
@@ -76,7 +74,8 @@ namespace CVhub.Migrations
 
                     b.Property<int?>("CompanyId");
 
-                    b.Property<string>("CompanyName");
+                    b.Property<string>("CompanyName")
+                        .IsRequired();
 
                     b.Property<DateTime>("Created");
 
@@ -86,15 +85,19 @@ namespace CVhub.Migrations
                     b.Property<string>("JobTitle")
                         .IsRequired();
 
-                    b.Property<string>("Location");
+                    b.Property<string>("Location")
+                        .IsRequired();
 
                     b.Property<decimal?>("SalaryFrom")
+                        .IsRequired()
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal?>("SalaryTo")
+                        .IsRequired()
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("ValidUntil");
+                    b.Property<DateTime?>("ValidUntil")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -107,7 +110,8 @@ namespace CVhub.Migrations
                 {
                     b.HasOne("CVhub.Models.JobOffer")
                         .WithMany("JobApplications")
-                        .HasForeignKey("JobOfferId");
+                        .HasForeignKey("JobOfferId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CVhub.Models.JobOffer", b =>

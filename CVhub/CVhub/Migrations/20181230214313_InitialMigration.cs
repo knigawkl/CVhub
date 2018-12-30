@@ -28,14 +28,14 @@ namespace CVhub.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     JobTitle = table.Column<string>(nullable: false),
+                    CompanyName = table.Column<string>(nullable: false),
                     CompanyId = table.Column<int>(nullable: true),
-                    CompanyName = table.Column<string>(nullable: true),
-                    SalaryFrom = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    SalaryTo = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    SalaryFrom = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SalaryTo = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
-                    Location = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    ValidUntil = table.Column<DateTime>(nullable: true)
+                    ValidUntil = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,14 +54,13 @@ namespace CVhub.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    OfferId = table.Column<int>(nullable: false),
+                    JobOfferId = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     PhoneNumber = table.Column<string>(nullable: false),
                     EmailAddress = table.Column<string>(nullable: false),
                     CoverLetter = table.Column<string>(nullable: true),
-                    DateOfBirth = table.Column<DateTime>(nullable: false),
-                    JobOfferId = table.Column<int>(nullable: true)
+                    DateOfBirth = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,7 +70,7 @@ namespace CVhub.Migrations
                         column: x => x.JobOfferId,
                         principalTable: "JobOffers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
