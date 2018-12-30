@@ -14,7 +14,13 @@ namespace CVhub.CustomDataAnnotations
 
         public override bool IsValid(object value)
         {
+            if (value == null)
+            {
+                return true;
+            }
+
             var dt = (DateTime)value;
+
             if (dt >= DateTime.Now)
             {
                 return true;
