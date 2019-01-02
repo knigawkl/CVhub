@@ -45,8 +45,8 @@
                 </div>
             }
             <div>
-                @Html.ActionLink("Apply", "Create", "JobApplication", new { id = Model.Id }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Apply", "Create", controllerName: "JobApplication", routeValues: new { id = Model.Id }, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("Edit", "Edit", "JobOffer", new { id = Model.Id }, new { @class = "btn btn-primary" })
                 @using (Html.BeginForm("Delete", "JobOffer", new { Model.Id }, FormMethod.Post, null, new { style = "display:inline;" }))
                 {
                     @Html.AntiForgeryToken()

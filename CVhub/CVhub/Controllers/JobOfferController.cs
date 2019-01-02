@@ -49,6 +49,13 @@ namespace CVhub.Controllers
             }
             offer.JobTitle = model.JobTitle;
             offer.Description = model.Description;
+            offer.CompanyName = model.CompanyName;
+            offer.Description = model.Description;
+            offer.JobTitle = model.JobTitle;
+            offer.Location = model.Location;
+            offer.SalaryFrom = model.SalaryFrom;
+            offer.SalaryTo = model.SalaryTo;
+            offer.ValidUntil = model.ValidUntil;
             _context.SaveChanges();
             return RedirectToAction("Details", new { id = model.Id });
         }
