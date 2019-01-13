@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CVhub.Controllers
 {
-    [Route("[controller]/[action]")]
     public class JobOfferController : Controller
     {
         private readonly DataContext _context;
@@ -113,9 +112,9 @@ namespace CVhub.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index([FromQuery(Name = "search")] string searchString)
+        public ActionResult<string> Index([FromQuery(Name = "search")] string searchString)
         {
-            List<JobOffer> jobOffers = await _context.JobOffers.ToListAsync();
+            List<JobOffer> jobOffers = _context.JobOffers.ToList();
 
             if (string.IsNullOrEmpty(searchString))
             {
@@ -131,32 +130,6 @@ namespace CVhub.Controllers
             List<JobApplication> applications = _context.JobApplications.Where(x => x.JobOfferId == id).ToList();
             offer.JobApplications = applications;
             return View(offer);
-        }
-
-        [HttpGet]
-        public JsonResult GetSearch(string searchBy, string searchValue)
-        {
-            List<JobOffer> jobOffers = new List<JobOffer>();
-            if (searchBy == "Company")
-            {
-                jobOffers = _context.JobOffers.Where(jo => jo.CompanyName.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || searchValue == null).ToList();
-                return Json(jobOffers);
-            }
-            else if (searchBy == "Job Title")
-            {
-                jobOffers = _context.JobOffers.Where(jo => jo.JobTitle.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || searchValue == null).ToList();
-                return Json(jobOffers);
-            }
-            else if (searchBy == "Location")
-            {
-                jobOffers = _context.JobOffers.Where(jo => jo.Location.Contains(searchValue, StringComparison.OrdinalIgnoreCase) || searchValue == null).ToList();
-                return Json(jobOffers);
-            }           
-            else
-            {
-                Console.WriteLine("no i dupa");
-                return Json(jobOffers);
-            }
         }
     }
 }

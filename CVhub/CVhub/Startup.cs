@@ -36,7 +36,7 @@ namespace CVhub
 
             var connection = @"Server=.\SQLEXPRESS;Database=CVhub;Trusted_Connection=True;";
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
-            /*
+            
             services.AddSwaggerGen(c =>
             {
 
@@ -56,20 +56,18 @@ namespace CVhub
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
-            */
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            /*
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "CVhub API v1");
-            });
-            */        
+            });     
 
             if (env.IsDevelopment())
             {
