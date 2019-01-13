@@ -112,16 +112,9 @@ namespace CVhub.Controllers
         }
 
         [HttpGet]
-        public ActionResult<string> Index([FromQuery(Name = "search")] string searchString)
+        public IActionResult Index()
         {
-            List<JobOffer> jobOffers = _context.JobOffers.ToList();
-
-            if (string.IsNullOrEmpty(searchString))
-            {
-                return View(jobOffers);
-            }
-            List<JobOffer> searchResult = jobOffers.FindAll(x => x.JobTitle.Contains(searchString, StringComparison.OrdinalIgnoreCase));
-            return View(searchResult);
+            return View();
         }
 
         public IActionResult Details(int id)
@@ -130,6 +123,18 @@ namespace CVhub.Controllers
             List<JobApplication> applications = _context.JobApplications.Where(x => x.JobOfferId == id).ToList();
             offer.JobApplications = applications;
             return View(offer);
+        }
+
+        private List<JobOffer> LoadJobOffers()
+        {
+            var jobOffers = _context.JobOffers.ToList();
+            var companies = _context.Companies.ToList();
+            foreach (var offer in jobOffers)
+            {
+                offer.Company = companies.FirstOrDefault(c => c.Id == offer.CompanyId);
+            }
+
+            return jobOffers;
         }
     }
 }

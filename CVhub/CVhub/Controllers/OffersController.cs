@@ -33,7 +33,6 @@ namespace CVManager.Controllers
             return jobOffers;
         }
 
-
         /// <summary>
         /// Get all job offers that have selected text inside.
         /// If searchString is empty then it returns all offers.
@@ -45,7 +44,9 @@ namespace CVManager.Controllers
         {
             var offers = LoadJobOffers();
             if (!string.IsNullOrEmpty(searchString))
+            {
                 offers = offers.Where(o => o.JobTitle.Contains(searchString)).ToList();
+            }
 
             return Ok(offers);
         }
@@ -55,6 +56,7 @@ namespace CVManager.Controllers
         /// </summary>
         /// <param name="id">Id of job offer</param>
         /// <returns>Job offer wiyh matching id</returns>
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Offers([FromRoute] int id)
         {

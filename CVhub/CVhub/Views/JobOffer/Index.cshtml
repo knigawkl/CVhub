@@ -1,6 +1,4 @@
-﻿@model IEnumerable<JobOffer>
-
-@{ ViewData["Title"] = "Job Offers"; }
+﻿@{ ViewData["Title"] = "Job Offers"; }
 
 <div class="row page-box">
     <div class="col-sm-12">
@@ -29,10 +27,7 @@
 
         <div class="btn-toolbar" role="toolbar" aria-label="Paging toolbar" style="margin-bottom: 20px; float: right">
             <div class="btn-group" role="group" aria-label="Pages" id="pageList">
-                <button type="button" class="btn btn-info active">1</button>
-                <button type="button" class="btn btn-info">2</button>
-                <button type="button" class="btn btn-info">3</button>
-                <button type="button" class="btn btn-info">4</button>
+
             </div>
         </div>
 
@@ -40,16 +35,20 @@
     </div>
 </div>
 
+@section Scripts {
     <script>
-        let url = "/api/offers";
+        let url = "/api/PagingOffers";
         let currentSearch = "";
 
         $(document).ready(function () {
             loadPage(1);
         });
 
+        console.log('elo');
+
         function loadPage(pageNumber) {
-            $.getJSON(`/api/PagingOffers/${pageNumber}?search=${currentSearch}`).done(function (data) {
+            $.getJSON(`${url}/${pageNumber}?search=${currentSearch}`).done(function (data) {
+                console.log(data);
                 let offers = data.jobOffers;
                 let pagesCount = data.pagesCount;
 
@@ -115,7 +114,8 @@
             currentSearch = document.getElementById("search").value;
             loadPage(1);
 
-            return false; 
+            return false;
         }
 
     </script>
+    }
