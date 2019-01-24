@@ -1,4 +1,7 @@
-﻿using CVhub.EntityFramework;
+﻿using CommunityCertForT;
+using CVhub.EntityFramework;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,9 +18,14 @@ namespace CVhub
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(env.ContentRootPath)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+            .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -25,6 +33,20 @@ namespace CVhub
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddSingleton(Configuration);
+            services.AddAuthentication(sharedOptions =>
+            {
+                sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+            .AddAzureAdB2C(options => Configuration.Bind("Authentication:AzureAdB2C", options))
+            .AddCookie();
+            services.AddMemoryCache();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -34,7 +56,7 @@ namespace CVhub
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var connection = @"Server=.\SQLEXPRESS;Database=CVhub;Trusted_Connection=True;";
+            var connection = this.Configuration["SqlConnectionString"];
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
             
             services.AddSwaggerGen(c =>
@@ -62,6 +84,9 @@ namespace CVhub
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseSession();
+            app.UseAuthentication();
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
