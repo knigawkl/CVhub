@@ -56,7 +56,7 @@ namespace CVhub
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var connection = this.Configuration["SqlConnectionString"];
+            var connection = Configuration["SqlConnectionString"];
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
             
             services.AddSwaggerGen(c =>
