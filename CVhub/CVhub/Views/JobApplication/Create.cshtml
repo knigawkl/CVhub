@@ -47,6 +47,14 @@
                 @Html.ValidationMessageFor(m => m.CoverLetter, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
+                <label asp-for="Photo">Your photo</label>
+                <input type="file" asp-for="Photo">
+            </div>
+            <div class="form-group">
+                <label asp-for="CV">Upload your CV</label>
+                <input type="file" asp-for="CV">
+            </div>
+            <div class="form-group">
                 <button type="submit" class="btn btn-primary">Apply</button>
             </div>
         }

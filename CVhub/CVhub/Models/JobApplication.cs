@@ -39,5 +39,7 @@ namespace CVhub.Models
         [Display(Name = "Date of birth")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyy-MM-dd}")]
         public DateTime? DateOfBirth { get; set; }
+        public string CvUrl { get; set; }
+        public string PhotoFileName { get; set; }
     }
 }
